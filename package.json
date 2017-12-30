@@ -31,6 +31,7 @@
     "webcomponent-qr-code": "^0.1.9"
   },
   "devDependencies": {
+    "@angular/cli": "^1.6.3",
     "browser-sync": "^2.9.11",
     "chai": "^3.0.0",
     "chai-as-promised": "^5.1.0",

@@ -23,6 +23,11 @@
             .state('takeAttendance', {
                 url: '/takeAttendance',
                 template: '<tmpl-take-Attendance></tmpl-take-Attendance>'
+            })
+
+            .state('transactions', {
+                url: '/transactions/:ID',
+                template: '<tmpl-transactions></tmpl-transactions>'
             });
     }
 })();
