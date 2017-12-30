@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html data-ng-app="app" ng-strict-di>
+<head>
+    <title>Angular Template</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <link rel="shortcut icon" href="images/favicon.png">
+    <base href="/">
+
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic">
+
+    <style type="text/css">
+        /** Hide when Angular is not yet loaded and initialized */
+        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+            display: none !important;
+        }
+    </style>
+
+    <!-- build:css styles/lib.css -->
+    <link href="/bower_components/angular-material/angular-material.css" rel="stylesheet" type="text/css">
+    <!-- endbuild -->
+
+    <!-- build:css styles/app.css-->
+
+    <!-- inject:css -->
+    <!-- endinject -->
+
+    <!-- endbuild -->
+</head>
+
+<body ng-cloak>
+
+    <tmpl-approot layout="column"></tmpl-approot>
+
+    <!-- build:js js/lib.js -->
+    <script src="/bower_components/angular/angular.js"></script>
+    <script src="/bower_components/angular-animate/angular-animate.js"></script>
+    <script src="/bower_components/angular-aria/angular-aria.js"></script>
+    <script src="/bower_components/angular-material/angular-material.js"></script>
+    <script src="/bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="/bower_components/lodash/lodash.js"></script>
+    <script src="/bower_components/qrcode.js/lib/qrcode.min.js"></script>
+    <script src="/bower_components/angular-qr/angular-qr.min.js"></script>
+    <script src="bower_components/angular-qr-scanner/qr-scanner.js"></script>
+    <script src="bower_components/angular-qr-scanner/src/jsqrcode-combined.min.js"></script>
+    <!-- <script src="/bower_components/qrcode.js/lib/qrcode.min.js"></script>
+    <script src="/bower_components/angular-qr/angular-qr.min.js"></script> -->
+    <!-- endbuild -->
+
+    <!-- build:js js/app.js -->
+
+    <!-- inject:js -->
+    <!-- endinject -->
+
+    <!-- inject:templates:js -->
+    <!-- endinject -->
+
+    <!-- endbuild -->
+</body>
+</html>
