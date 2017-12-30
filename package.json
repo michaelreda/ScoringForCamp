@@ -16,12 +16,18 @@
     "test": "gulp test"
   },
   "dependencies": {
-    "body-parser": "^1.13.1",
+    "body-parser": "^1.18.2",
     "compression": "^1.6.0",
     "connect-modrewrite": "^0.8.1",
-    "cors": "^2.7.1",
-    "express": "^4.13.0",
-    "morgan": "^1.6.0",
+    "cors": "^2.8.4",
+    "express": "^4.16.2",
+    "fs": "0.0.1-security",
+    "gzippo": "^0.2.0",
+    "mongoose": "^5.0.0-rc0",
+    "morgan": "^1.9.0",
+    "nodemon": "^1.14.6",
+    "path": "^0.12.7",
+    "serve-static": "^1.13.1",
     "webcomponent-qr-code": "^0.1.9"
   },
   "devDependencies": {
