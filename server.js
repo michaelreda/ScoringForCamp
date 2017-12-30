@@ -77,3 +77,34 @@ app.post('/add_user', function (req, res) {
         }
     })
 });
+
+app.post('/new_transaction', function (req, res) {
+    console.log(req.body);
+    var transaction = new Transaction(req.body);
+    transaction.save(function (err, transaction) {
+        if (err)
+            res.send(err);
+        else {
+            console.log(req.body.user);
+            User.updateOne({ "ID": req.body.user }, {$inc:{"points":req.body.points}, $push: { "transactions": transaction._id } }, (err, user) => {
+                if(err)
+                    console.log(err);
+                else{
+                    //add the transaction for the admin
+                    User.updateOne({ "ID": req.body.admin }, {$push: { "transactions": transaction._id } }, (err, admin)=>{}); 
+                    res.send("done");
+                }
+            })
+        }
+    })
+});
+
+app.get('/get_transactions/:ID', function (req, res) {
+    console.log(req.params);
+    User.findOne({"ID":req.params.ID}).populate("transactions").exec(function(err,user){
+        if(err)
+            console.log(err);
+        else
+            res.send(user);    
+    })
+});

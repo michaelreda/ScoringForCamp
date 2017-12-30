@@ -27,11 +27,15 @@
 
 
     // ----- ControllerFunction -----
-    ControllerFunction.$inject = ['logger','$scope','$stateParams'];
+    ControllerFunction.$inject = ['logger','$scope','$stateParams','$http'];
 
     /* @ngInject */
-    function ControllerFunction(logger,$scope,$stateParams) {
+    function ControllerFunction(logger,$scope,$stateParams,$http) {
         $scope.ID = $stateParams.ID; 
+
+        $http.get("http://localhost:5000/get_transactions/3").then(function(response){
+            console.log(response.data);
+        });
     }
 
 })();
