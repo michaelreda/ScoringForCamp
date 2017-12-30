@@ -26,20 +26,25 @@
     }
 
     // ----- ControllerFunction -----
-    ControllerFunction.$inject = ['$mdDialog'];
+    ControllerFunction.$inject = ['$mdDialog','$window'];
 
     /* @ngInject */
-    function ControllerFunction($mdDialog) {
+    function ControllerFunction($mdDialog,$window) {
         var vm = this;
-        vm.login = login;
-
-        function login() {
-            $mdDialog.show({
-                templateUrl: 'components/login/login-dialog.html',
-                controller: 'LoginDialogController',
-                controllerAs: 'vm'
-            });
+        vm.goBack= function(){
+            $window.location.href= "http://www.rosolfamily.com/"
         }
+
+
+        // vm.login = login;
+
+        // function login() {
+        //     $mdDialog.show({
+        //         templateUrl: 'components/login/login-dialog.html',
+        //         controller: 'LoginDialogController',
+        //         controllerAs: 'vm'
+        //     });
+        // }
     }
 
 })();
