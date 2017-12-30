@@ -8,4 +8,5 @@ var Schema = mongoose.Schema({
     user:{type : mongoose.Schema.Types.ObjectId, ref: 'user'}
 })
 
+var Transaction = mongoose.model("transaction", Schema);
   module.exports = Transaction;

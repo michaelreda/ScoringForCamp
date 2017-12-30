@@ -43,8 +43,14 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false })); //this line must be on top of app config
 app.use(bodyParser.json());
 
-mongoose.connect(DB_URI);
-console.log("connecting to global db..");
+mongoose.connect(DB_URI,function(err){
+    if(!err){
+        console.log("connected to global db..");
+    }else{
+        console.log("error");
+    }
+});
+
 
 
 app.options('/*', function (req, res) {
@@ -54,3 +60,20 @@ app.options('/*', function (req, res) {
 
 
 var User = require("./server/Models/User");
+var Transaction = require("./server/Models/Transaction");
+
+app.get('/', function (req, res) {
+    res.send("hi, this is the server");
+});
+
+app.post('/add_user', function (req, res) {
+    console.log(req.body);
+    var user = new User(req.body.user);
+    user.save(function (err, user) {
+        if (err)
+            res.send(err);
+        else {
+            res.send("user added successfully");
+        }
+    })
+});
