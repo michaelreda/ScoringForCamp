@@ -17,10 +17,10 @@
             </tr>
         </thead>
         <tbody md-body>
-            <tr md-row  ng-repeat="transaction in user.transactions" style="font-weight: 600;">
+            <tr md-row  ng-repeat="transaction in user.transactions|orderBy: '-time'" style="font-weight: 600;">
                 <td md-cell class="{{transaction.points>0?'postive':'negative'}}">{{transaction.time|date : 'EEE d MMM hh:mm a'}}</td>
                 <td md-cell class="{{transaction.points>0?'postive':'negative'}}">{{transaction.type}}</td>
-                <td md-cell class="{{transaction.points>0?'postive':'negative'}}">{{transaction.admin}}</td>
+                <td md-cell class="{{transaction.points>0?'postive':'negative'}}">Mr. {{transaction.admin}}</td>
                 <td md-cell class="{{transaction.points>0?'postive':'negative'}}">{{transaction.points>0?"+":""}}{{transaction.points}}</td>
             </tr>
         </tbody>
