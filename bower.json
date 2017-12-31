@@ -27,6 +27,7 @@
     "qrcode.js": "qrcode#^1.0.2",
     "angular-qr": "^0.2.0",
     "qrscanjs": "*",
-    "angular-qr-scanner": "^0.1.0"
+    "angular-qr-scanner": "^0.1.0",
+    "angular-material-data-table": "^0.10.10"
   }
 }

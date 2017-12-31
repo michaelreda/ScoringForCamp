@@ -13,6 +13,7 @@
         // 'app.login',
         'app.toolbar',
         'ja.qr',
-        'qrScanner'
+        'qrScanner',
+        'md.data.table'
     ]);
 })();

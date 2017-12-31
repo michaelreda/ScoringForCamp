@@ -81,6 +81,7 @@ app.post('/add_user', function (req, res) {
 app.post('/new_transaction', function (req, res) {
     console.log(req.body);
     var transaction = new Transaction(req.body);
+    transaction.time= Date.now();
     transaction.save(function (err, transaction) {
         if (err)
             res.send(err);

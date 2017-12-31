@@ -1,1 +1,39 @@
-hiii {{ID}}
+<theme-preview primary="brown" accent="accent">
+    <h2>{{user.name}}</h2>
+</theme-preview>
+
+<md-table-container>
+    <table md-table>
+        <thead md-head>
+            <tr md-row style="font-weight: 800;">
+                <th md-column>
+                    <span>Time</span>
+                </th>
+                <th md-column>
+                    <span>Type</span>
+                </th>
+                <th md-column>Auhtorized by</th>
+                <th md-column>Points</th>
+            </tr>
+        </thead>
+        <tbody md-body>
+            <tr md-row  ng-repeat="transaction in user.transactions" style="font-weight: 600;">
+                <td md-cell class="{{transaction.points>0?'postive':'negative'}}">{{transaction.time|date : 'EEE d MMM hh:mm a'}}</td>
+                <td md-cell class="{{transaction.points>0?'postive':'negative'}}">{{transaction.type}}</td>
+                <td md-cell class="{{transaction.points>0?'postive':'negative'}}">{{transaction.admin}}</td>
+                <td md-cell class="{{transaction.points>0?'postive':'negative'}}">{{transaction.points>0?"+":""}}{{transaction.points}}</td>
+            </tr>
+        </tbody>
+    </table>
+</md-table-container>
+
+<style>
+    .postive {
+        background-color: #00800047;
+    }
+
+    .negative {
+        background-color: #ff000047;
+    }
+
+</style>

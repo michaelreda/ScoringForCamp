@@ -32,9 +32,11 @@
     /* @ngInject */
     function ControllerFunction(logger,$scope,$stateParams,$http) {
         $scope.ID = $stateParams.ID; 
+        $scope.user = undefined;
 
         $http.get("http://localhost:5000/get_transactions/3").then(function(response){
             console.log(response.data);
+            $scope.user= response.data;
         });
     }
 
