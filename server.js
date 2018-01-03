@@ -43,10 +43,10 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false })); //this line must be on top of app config
 app.use(bodyParser.json());
 
-mongoose.connect(DB_URI,function(err){
-    if(!err){
+mongoose.connect(DB_URI, function (err) {
+    if (!err) {
         console.log("connected to global db..");
-    }else{
+    } else {
         console.log("error");
     }
 });
@@ -81,18 +81,18 @@ app.post('/add_user', function (req, res) {
 app.post('/new_transaction', function (req, res) {
     console.log(req.body);
     var transaction = new Transaction(req.body);
-    transaction.time= Date.now();
+    transaction.time = Date.now();
     transaction.save(function (err, transaction) {
         if (err)
             res.send(err);
         else {
             console.log(req.body.user);
-            User.updateOne({ "ID": req.body.user }, {$inc:{"points":req.body.points}, $push: { "transactions": transaction._id } }, (err, user) => {
-                if(err)
+            User.updateOne({ "ID": req.body.user }, { $inc: { "points": req.body.points }, $push: { "transactions": transaction._id } }, (err, user) => {
+                if (err)
                     console.log(err);
-                else{
+                else {
                     //add the transaction for the admin
-                    User.updateOne({ "ID": req.body.admin }, {$push: { "transactions": transaction._id } }, (err, admin)=>{}); 
+                    User.updateOne({ "ID": req.body.admin }, { $push: { "transactions": transaction._id } }, (err, admin) => { });
                     res.send("done");
                 }
             })
@@ -102,10 +102,39 @@ app.post('/new_transaction', function (req, res) {
 
 app.get('/get_transactions/:ID', function (req, res) {
     console.log(req.params);
-    User.findOne({"ID":req.params.ID}).populate("transactions").exec(function(err,user){
-        if(err)
+    User.findOne({ "ID": req.params.ID }).populate("transactions").exec(function (err, user) {
+        if (err)
             console.log(err);
         else
-            res.send(user);    
+            res.send(user);
     })
+});
+
+
+app.post('/add_attendance', function (req, res) {
+    console.log(req.body);
+    var now = Date.now();
+    User.findOne({"ID":req.body.ID},function(err,user){
+        if (err)
+            res.send("error");
+        else {
+            var last_attendance_date= new Date(user.attendance_dates[user.attendance_dates.length-1]);
+            if(new Date(now).getDate()!=last_attendance_date.getDate()){
+                User.findOneAndUpdate({ "ID": req.body.ID }, { $push: { "attendance_dates": new Date(now) } }, (err, user) => {
+                    if (err){
+                        console.log(err);
+                        res.send("error");
+                    }else {
+                        res.send({name:user.name,time:now});
+                    }
+                })
+            }else{
+                res.send("attendance already entered for today!");
+            }
+        }
+    })
+
+  
+
+
 });

@@ -1,1 +1,24 @@
-<qr-scanner width="1200" height="500" ng-success="onSuccess(data)" ng-error="onError(error)" />
+<qr-scanner width="1200" height="500" ng-success="onSuccess(data)" ng-error="onError(error)" ></qr-scanner>
+
+
+<md-table-container style="max-width: 400px!important">
+    <table md-table>
+        <thead md-head>
+            <tr md-row style="font-weight: 800;">
+                <th md-column>
+                    <span>Name</span>
+                </th>
+                <th md-column>
+                    <span>Time</span>
+                </th>
+            </tr>
+        </thead>
+        <tbody md-body>
+            <tr md-row  ng-repeat="scan in scanned_today" style="font-weight: 600;">
+                <td md-cell >{{scan.name}}</td>
+                <td md-cell >{{scan.time|date : 'hh:mm a'}}</td>
+                
+            </tr>
+        </tbody>
+    </table>
+</md-table-container>

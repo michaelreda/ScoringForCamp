@@ -2,6 +2,6 @@
     'use strict';
     
     angular.module('app.transactions', [
-        'app.core','ja.qr'
+        'app.core'
     ]);
 })();
