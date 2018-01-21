@@ -36,7 +36,7 @@ app.use(cors());
 console.log("app started");
 
 var mongoose = require('mongoose');
-var DB_URI = "mongodb://admin:admin@ds133597.mlab.com:33597/qr_attendance";
+var DB_URI = "mongodb://admin:admin@ds211088.mlab.com:11088/rosolcampscoring";
 var bodyParser = require('body-parser');
 // app.use(express.static('../public'))
 // var Router = express.Router();
@@ -59,24 +59,138 @@ app.options('/*', function (req, res) {
 
 
 
-var User = require("./server/Models/User");
-var Transaction = require("./server/Models/Transaction");
+var Team = require("./server/Models/Team");
+var Item = require("./server/Models/Item");
 
 app.get('/', function (req, res) {
     res.send("hi, this is the server");
 });
 
-app.post('/add_user', function (req, res) {
+app.post('/add_team', function (req, res) {
     console.log(req.body);
-    var user = new User(req.body.user);
-    user.save(function (err, user) {
+    var team = new Team(req.body.team);
+    team.save(function (err, team) {
         if (err)
             res.send(err);
         else {
-            res.send("user added successfully");
+            res.send("team added successfully");
         }
     })
 });
+
+
+
+app.post('/define_item', function (req, res) {
+    console.log(req.body);
+    var item = new Item(req.body.item);
+    item.save(function (err, item) {
+        if (err)
+            res.send(err);
+        else {
+            res.send("item added successfully");
+        }
+    })
+});
+
+app.post('/add_points', function (req, res) {
+    console.log(req.body);
+    Team.updateOne({_id:req.body.team_id},{$inc:{points:req.body.points},$inc:{total_points:req.body.points}},function(err,team){
+        if(err){
+            console.log(err);
+            res.send(err);
+        }else{
+            Team.findOne({_id:req.body.team_id},function(err,team){res.send(team);});
+        }
+    })
+});
+
+app.post('/add_item',function(req,res){
+
+    Team.findOne({"_id":req.body.team_id}).populate('items').exec(function(err,team){
+        if(err){
+            console.log(err);
+            res.send(err);
+        }else{
+            var team_item=null;
+            var item_index=-1;
+            //check if this item already owned by the team
+            for(var i=0;i<team.items.length;i++){
+                if(team.items[i].item._id==req.body.item._id){
+                    team_item = team.items[i];
+                    item_index= i;
+                    break;
+                }
+            }
+            if(team_item !=null){//if it's the first time to own this item
+                //check if we can add the item again
+                if(team_item.count<req.body.item.max_number){
+                    
+                      buy_item(team,item_index,req.body.item);
+                }else{
+                   return res.send("max number of "+req.body.item.title+" reached ("+req.body.item.max_number+"). can not add this item again");
+                }
+            }else{
+                buy_item(team,item_index,req.body.item);
+            }
+            
+        }
+
+        function buy_item(team,item_index,requested_item){
+           // console.log('team,item_index,requested_item: ', team,item_index,requested_item);
+
+            var now = Date.now();
+            //check if the team have enough points to purchase this item
+            if(team.points>=requested_item.price){
+                //if not first time
+                if(item_index != -1){
+                    Team.findOne({_id:team._id},function(err,team){
+                        if(err){
+                            console.log(err);
+                            return finish_purchase(err);
+                        }else{
+                            team.items[item_index].count++;
+                            team.points-=requested_item.price;
+                            team.items[item_index].date= now;
+                            team.save((err,team)=>{
+                                return finish_purchase(true);  
+                            });
+                        }  
+                    })
+                }else{//if first time
+                    var points = team.points - requested_item.price;
+                    Team.updateOne({_id:team._id},{$push:{"items":{item:requested_item._id,count:1,date:now}},"points":points},function(err){
+                        if(err){
+                            console.log(err);
+                            return finish_purchase(err);
+                        }else
+                           return finish_purchase(true);    
+                    })
+                }
+            }else{
+                return finish_purchase("Not enough points.. you have "+team.points+" points and "+requested_item.title+"'s price is "+requested_item.price);
+                
+            }
+           
+        }
+
+
+        function finish_purchase (result){
+            if(result==true){
+                Team.findOne({_id:req.body.team_id}).populate('items').exec(function(err,team){
+                    if(err){
+                        console.log(err);
+                        return res.send(err);
+                    }                        
+                    else
+                        return res.send(team);    
+                });
+            }else{
+                 return res.send(result);
+            }
+        }
+
+    })
+})
 
 app.post('/new_transaction', function (req, res) {
     console.log(req.body);
@@ -111,30 +225,14 @@ app.get('/get_transactions/:ID', function (req, res) {
 });
 
 
-app.post('/add_attendance', function (req, res) {
-    console.log(req.body);
-    var now = Date.now();
-    User.findOne({"ID":req.body.ID},function(err,user){
-        if (err)
-            res.send("error");
-        else {
-            var last_attendance_date= new Date(user.attendance_dates[user.attendance_dates.length-1]);
-            if(new Date(now).getDate()!=last_attendance_date.getDate()){
-                User.findOneAndUpdate({ "ID": req.body.ID }, { $push: { "attendance_dates": new Date(now) } }, (err, user) => {
-                    if (err){
-                        console.log(err);
-                        res.send("error");
-                    }else {
-                        res.send({name:user.name,time:now});
-                    }
-                })
-            }else{
-                res.send("attendance already entered for today!");
-            }
-        }
-    })
+app.get('/get_teams', function (req, res) {
+    Team.find({}).exec(function(err,teams){
+      res.send(teams);
+  })
+});
 
-  
-
-
+app.get('/get_items', function (req, res) {
+    Item.find({},function(err,items){
+      res.send(items);
+  })
 });

@@ -1,41 +1,171 @@
 
 
-<div>
+<!-- <div style="background-image: url('images/shelves.jpg');
+background-size:100% 100%;width:1420px;height:728px">
   
-      <md-card class="center"style="background-image: url('images/card_front.jpg');
-      background-size:100% 100%;height: 436px;width:726px" >
-     
-      <div style="background-image: url('images/boys/me.jpg');
-      background-size:100% 100%;
-      width: 129px;
-      height: 28%;
-      position: relative;
-      left: 8.1%;
-      top: 8%;"></div>
-      <div style="   
-      position: relative;
-      left: 54%;
-      top: -11%;
-      font-size: 335%;
-      color: white;
-      font-weight: 500;">Michael Reda</div>
-      <qr text="ID" type-number="0" correction-level="'H'"  size="225" style="position: relative;
-      left: 2%;
-      top: -1%;"></qr>
-      </md-card>
-      
-      <md-card  class="center" style="background-image:  url('images/card_back.jpg');
-      background-size:100% 100%;height:436px;width:726px" >
-      </md-card>
- 
-
-  
-</div>
+</div> -->
 
 
-<style>
+<!-- <style>
   .center{
     margin-right:auto;
     margin-left:auto;
   }
+</style> -->
+
+
+<div class="div-block">
+  <div class="row" id="Row" ng-repeat="team in teams">
+    <div>
+        <h1 class="heading">{{team.name}} ({{team.points}})</h1>
+        <!-- <h1 class="heading" style="width:100px;">{{team.points}}</h1> -->
+    </div>
+    <div class="items-row style-1" id="item-container">
+      <div class="item-container" ng-repeat="item in items" style="background-image: url('{{item.img}}');{{team_own_this_item(item._id,team)==true?'opacity:1':''}}">
+        <span class="button w-button" ng-if="!team_own_this_item(item._id,team) && !processing" ng-click="buy_item(item,team._id)"><strong>Buy ({{item.price}})</strong></span>
+        <img ng-if="processing" class="loader" src="https://loading.io/spinners/double-ring/lg.double-ring-spinner.gif">
+        <div class="text-block"><strong class="bold-text">{{item.title}}</strong></div>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="row" id="Row">
+    <h1 class="heading">TEAM 2</h1>
+    <div class="items-row" id="item-container">
+      <div class="item-container"></div>
+    </div>
+  </div>
+  <div class="row" id="Row">
+    <h1 class="heading">TEAM 3</h1>
+    <div class="items-row" id="item-container">
+      <div class="item-container"></div>
+    </div>
+  </div>
+  <div class="row" id="Row">
+    <h1 class="heading">TEAM 4</h1>
+    <div class="items-row" id="item-container">
+      <div class="item-container"></div>
+    </div>
+  </div> -->
+</div>
+
+<style>
+  .div-block {
+  width: 1420px;
+  height: 708px;
+  background-image: url('images/shelves.jpg');
+  background-position: 0px 0px;
+  background-size: 100% 100%;
+}
+
+.heading {
+  position: static;
+  display: block;
+  width: 250px;
+  margin-right: auto;
+  margin-left: auto;
+  border: 1px solid #000;
+  border-radius: 0px 0px 13px 13px;
+  background-image: url('images/team name bg.jpg');
+  background-position: 0px 0px;
+  background-size: 100% 100%;
+  box-shadow: 1px 1px 11px 0 #000;
+  -webkit-perspective: 1233px;
+  perspective: 1233px;
+  color: #000;
+  text-align: center;
+}
+
+.row {
+  height: 182px;
+  margin-top: -30px;
+  padding-top: 0px;
+}
+
+.items-row {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  position: relative;
+  display: inline-flex;
+  height: 170px;
+  width: 1244px;
+  /* height: 130px; */
+  margin-top: -15px;
+  margin-right: 101px;
+  margin-left: 90px;
+  padding-top: 0px;
+  padding-left: 0px;
+}
+
+.item-container {
+  display: inline-block;
+  width: 135px;
+  min-width: 135px;
+  height: 132px;
+  background-position: 50% 100%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  opacity: 0.7;
+}
+
+.button {
+  position: static;
+  display: inline-block;
+  margin-top: 55px;
+  margin-right: 0px;
+  margin-left: 32px;
+  padding: auto;
+  border-radius: 6px;
+  background-image: -webkit-linear-gradient(270deg, #00aa45, #00aa45);
+  background-image: linear-gradient(180deg, #00aa45, #00aa45);
+  box-shadow: 1px 1px 3px 0 #000;
+  opacity: 1 !important;
+  text-align: center;
+  text-transform: none;
+  line-height: 27px;  
+  padding: 5px;
+  color: white;
+  cursor: pointer;
+}
+
+
+.text-block {
+  font-size: 23px;
+  text-align: center;
+}
+
+.bold-text {
+  position: absolute;
+  top: 131px;
+  display: block;
+  width: 135px;
+  color: #000;
+  font-size: 21px;
+  text-shadow: 0 1px 0 #fff, 0 -1px 0 #fff;
+}
+.loader{
+  width: 50%;
+    margin-left: 25%;
+    margin-top: 25%;
+}
+
+.style-1::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 5px;
+	background-color: #f5f5f5a8;
+}
+
+.style-1::-webkit-scrollbar
+{
+	width: 7px;
+	background-color: #48250900;
+}
+
+.style-1::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgb(170, 117, 18);
+	background-color: rgb(172, 112, 44);
+}
 </style>
+
