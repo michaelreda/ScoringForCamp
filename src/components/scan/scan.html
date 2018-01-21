@@ -1,13 +1,33 @@
-<qr-scanner width="1200" height="500" ng-success="onSuccess(data)" ng-error="onError(error)" ></qr-scanner>
+<qr-scanner ng-show="QR_scanner_visible" width="1200" height="500" ng-success="onSuccess(data)" ng-error="onError(error)" ></qr-scanner>
 
 
-<div id="container">
+<div id="container" ng-show="!QR_scanner_visible" style="text-align: -webkit-center;">
 
+    <form style="margin-bottom:30px">
+                <md-radio-group ng-model="team">
+            
+                  <md-radio-button value="{{team._id}}" ng-repeat="team in teams" style="width: 0;">{{team.name}}</md-radio-button>
+            
+                </md-radio-group>
+        <md-button class="md-raised md-primary" ng-click="add_points_to_team(add_points,team)">add {{add_points}} points</md-button>
+    </form>
+
+    <div id="turntable"></div>
+    <img src="images/pin.png" class="pin" style="
+    position: relative;
+    width: 166px;
+    top: -378px;
+    margin-left: auto;
+    margin-right: auto;
+    transform: translateZ(0);
+    outline: 1px solid transparent;"/>
 </div>
-<h1 ng-click="start()">Start</h1>
-<h1 ng-click="stop()">Stop</h1>
+<h1 ng-click="start()" ng-show="!QR_scanner_visible">Start</h1>
+<h1 ng-click="stop()" ng-show="!QR_scanner_visible">Stop</h1>
 
-<md-table-container style="max-width: 400px!important">
+
+
+<!-- <md-table-container style="max-width: 400px!important">
     <table md-table>
         <thead md-head>
             <tr md-row style="font-weight: 800;">
@@ -23,9 +43,8 @@
             <tr md-row  ng-repeat="scan in scanned_today" style="font-weight: 600;">
                 <td md-cell >{{scan.name}}</td>
                 <td md-cell >{{scan.time|date : 'hh:mm a'}}</td>
-                
             </tr>
         </tbody>
     </table>
-</md-table-container>
+</md-table-container> -->
 

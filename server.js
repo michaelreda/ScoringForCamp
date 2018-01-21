@@ -94,12 +94,13 @@ app.post('/define_item', function (req, res) {
 
 app.post('/add_points', function (req, res) {
     console.log(req.body);
-    Team.updateOne({_id:req.body.team_id},{$inc:{points:req.body.points},$inc:{total_points:req.body.points}},function(err,team){
+    Team.updateOne({_id:req.body.team_id},{$inc:{points:req.body.points,total_points:req.body.points}},function(err,team){
         if(err){
             console.log(err);
-            res.send(err);
+            res.send("Error occurred try again!");
         }else{
-            Team.findOne({_id:req.body.team_id},function(err,team){res.send(team);});
+            //Team.findOne({_id:req.body.team_id},function(err,team){res.send(team);});
+            res.send(req.body.points + " points added successfully");
         }
     })
 });
@@ -182,7 +183,7 @@ app.post('/add_item',function(req,res){
                         return res.send(err);
                     }                        
                     else
-                        return res.send(team);    
+                        return res.send(req.body.item.title+" added successfully")//res.send(team);    
                 });
             }else{
                  return res.send(result);
@@ -226,7 +227,7 @@ app.get('/get_transactions/:ID', function (req, res) {
 
 
 app.get('/get_teams', function (req, res) {
-    Team.find({}).exec(function(err,teams){
+    Team.find({}).sort('name').exec(function(err,teams){
       res.send(teams);
   })
 });

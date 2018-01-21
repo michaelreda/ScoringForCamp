@@ -27,10 +27,10 @@
 
 
     // ----- ControllerFunction -----
-    ControllerFunction.$inject = ['logger', '$scope', '$window', '$http','$location'];
+    ControllerFunction.$inject = ['logger', '$scope', '$window', '$http','$location','$mdToast'];
 
     /* @ngInject */
-    function ControllerFunction(logger, $scope, $window, $http,$location) {
+    function ControllerFunction(logger, $scope, $window, $http,$location, $mdToast) {
         // $scope.ID="3";
         // console.log($window.outerHeight);
         // $scope.window_width= $window.innerWidth;
@@ -71,6 +71,12 @@
             $http.post($window.localStorage.getItem("base_url")+"/add_item",{item:item,team_id:team_id}).then(function (response) {
                 console.log(response.data);
                 get_teams();
+                $mdToast.show(
+                    $mdToast.simple()
+                      .textContent(response.data)
+                      .hideDelay(5000)
+                  );
+                  return;
             });
         }
 
