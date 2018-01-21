@@ -1,6 +1,12 @@
 <qr-scanner width="1200" height="500" ng-success="onSuccess(data)" ng-error="onError(error)" ></qr-scanner>
 
 
+<div id="container">
+
+</div>
+<h1 ng-click="start()">Start</h1>
+<h1 ng-click="stop()">Stop</h1>
+
 <md-table-container style="max-width: 400px!important">
     <table md-table>
         <thead md-head>
@@ -22,3 +28,4 @@
         </tbody>
     </table>
 </md-table-container>
+
