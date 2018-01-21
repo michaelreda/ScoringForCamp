@@ -2,9 +2,9 @@
 
     'use strict';
 
-    angular.module('app.takeAttendance')
-        .directive('tmplTakeAttendance', directiveFunction)
-        .controller('TakeAttendanceController', ControllerFunction);
+    angular.module('app.scan')
+        .directive('tmplScan', directiveFunction)
+        .controller('ScanController', ControllerFunction);
 
 
     // ----- directiveFunction -----
@@ -15,10 +15,10 @@
 
         var directive = {
             restrict: 'E',
-            templateUrl: 'components/takeAttendance/takeAttendance.html',
+            templateUrl: 'components/scan/scan.html',
             scope: {
             },
-            controller: 'TakeAttendanceController',
+            controller: 'ScanController',
             controllerAs: 'vm'
         };
 
@@ -66,15 +66,15 @@
         var turntable = new Turntable({
             values: [
               {
-                id: 1, //奖品id，可以重复（比如：谢谢参与就可以有n个，中奖后会随即选择一个转动到该位置
-                name: '一等奖', //奖品名称
+                id: 1, 
+                name: '一等奖', 
                 img: {
-                  src: 'images/kas.png', //奖品图片路径
-                  width: 50, //奖品图片宽度，请根据实际情况去设置，避免太大
-                  height: 50, //奖品图片高度，请根据实际情况去设置，避免太大，与宽度等比率缩放
+                  src: 'images/kas.png', 
+                  width: 50, 
+                  height: 50,
                 },
-                bg: '#ccc', //该奖品的在转盘中的扇形背景颜色
-                fill: '#000' //奖品名称的文字颜色
+                bg: '#ccc', 
+                fill: '#000'
               },{
                 id: 2, //奖品id，可以重复（比如：谢谢参与就可以有n个，中奖后会随即选择一个转动到该位置
                 name: 'ha33', //奖品名称

@@ -8,7 +8,7 @@
         // Features (listed alphabetically)
         'app.approot',
         'app.home',
-        'app.takeAttendance',
+        'app.scan',
         'app.transactions',
         // 'app.login',
         'app.toolbar',

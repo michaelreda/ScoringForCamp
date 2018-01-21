@@ -20,9 +20,9 @@
                 template: '<tmpl-home></tmpl-home>'
             })
 
-            .state('takeAttendance', {
-                url: '/takeAttendance',
-                template: '<tmpl-take-Attendance></tmpl-take-Attendance>'
+            .state('scan', {
+                url: '/scan',
+                template: '<tmpl-scan></tmpl-scan>'
             })
 
             .state('transactions', {

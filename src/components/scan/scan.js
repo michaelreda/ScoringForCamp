@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    angular.module('app.takeAttendance', [
+    angular.module('app.scan', [
         'app.core','qrScanner'
     ]);
 })();
