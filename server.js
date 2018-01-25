@@ -8,14 +8,14 @@ var cors = require('cors');
 //app.use(gzippo.staticGzip("" + __dirname + "/dist"));
 var path = require('path');
 var serveStatic = require('serve-static');
-var indexHtml = 'src/index.html';
-var serve = serveStatic(path.resolve('dist'), {
+var indexHtml = 'index.html';
+var serve = serveStatic(path.resolve('build'), {
     index: indexHtml, //forces invalidation of cached 'index.html'
-    setHeaders: setCustomCacheControl,
+    setHeaders: setCustomCacheControl
     // cacheControl: true, //default is true
     // lastModified: true, //default is true
     // etag: true, //default is true
-})
+});
 function setCustomCacheControl(res, myPath, stat) {
     if (path.parse(myPath).base == indexHtml) {
         //browser must contact the server before
@@ -29,7 +29,7 @@ function setCustomCacheControl(res, myPath, stat) {
     }
 }
 app.use(serve);
-var accessLogStream = fs.createWriteStream(__dirname + '/access.log', { flags: 'a' })
+var accessLogStream = fs.createWriteStream(__dirname + '/access.log', { flags: 'a' });
 app.use(morgan({ combinedstream: accessLogStream }));
 app.listen(process.env.PORT || 5000);
 app.use(cors());

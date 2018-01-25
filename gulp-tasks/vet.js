@@ -26,7 +26,8 @@ module.exports = function (config) {
             .pipe(config.$.if(config.args.verbose, config.$.print()))
             .pipe(config.$.jshint())
             .pipe(config.$.jshint.reporter('jshint-stylish', {verbose: true}))
-            .pipe(config.$.jshint.reporter('fail'))
+            // uncomment to fail the task when JSHint finds errors
+            // .pipe(config.$.jshint.reporter('fail'))
             .pipe(config.$.jscs());
     }
 };

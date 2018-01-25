@@ -29,5 +29,8 @@
     "qrscanjs": "*",
     "angular-qr-scanner": "^0.1.0",
     "angular-material-data-table": "^0.10.10"
+  },
+  "resolutions": {
+    "angular": "1.6.8"
   }
 }
