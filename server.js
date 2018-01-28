@@ -62,9 +62,9 @@ app.options('/*', function (req, res) {
 var Team = require("./server/Models/Team");
 var Item = require("./server/Models/Item");
 
-app.get('/', function (req, res) {
-    res.send("hi, this is the server");
-});
+// app.get('/', function (req, res) {
+//     res.render('index.html');
+// });
 
 app.post('/add_team', function (req, res) {
     console.log(req.body);
